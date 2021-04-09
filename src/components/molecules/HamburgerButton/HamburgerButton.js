@@ -4,7 +4,12 @@ import { ReactComponent as CloseIcon } from 'assets/icons/close_icon.svg';
 import StyledHamburgerButton from './StyledHamburgerButton';
 
 const HamburgerButton = ({ isNavOpen, toggleNavVisibility }) => {
-  return <StyledHamburgerButton onClick={() => toggleNavVisibility()}>{isNavOpen ? <CloseIcon /> : <MenuIcon />}</StyledHamburgerButton>;
+  const className = isNavOpen ? 'close-button' : '';
+  return (
+    <StyledHamburgerButton className={className} onClick={() => toggleNavVisibility()}>
+      {isNavOpen ? <CloseIcon /> : <MenuIcon />}
+    </StyledHamburgerButton>
+  );
 };
 
 export default HamburgerButton;

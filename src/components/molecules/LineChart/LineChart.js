@@ -14,7 +14,7 @@ const LineContainer = styled.div`
   }
 
   @media only screen and (max-width: 600px) {
-    width: 90vw;
+    width: 88vw;
   }
 `;
 

@@ -9,11 +9,18 @@ const Home = () => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
+    const source = axios.CancelToken.source();
+    let config = { cancelToken: source.token };
+
     axios
-      .get('https://disease.sh/v3/covid-19/all?yesterday=false&twoDaysAgo=false')
+      .get('https://disease.sh/v3/covid-19/all?yesterday=false&twoDaysAgo=false', config)
       .then((response) => setData(response.data))
       // .then((response) => console.log(response.data))
-      .catch((err) => console.error(err));
+      .catch((err) => {});
+
+    return () => {
+      source.cancel();
+    };
   }, []);
 
   const renderContent = (data) => {
@@ -21,6 +28,7 @@ const Home = () => {
       return (
         <>
           <Headline size="2">Podstawowe dane</Headline>
+
           <Wrapper>
             <BasicData className="BasicData" sum={data.active} today={data.todayCases} oneMilion={data.casesPerOneMillion} type="cases"></BasicData>
             <BasicData

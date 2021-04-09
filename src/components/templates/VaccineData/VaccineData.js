@@ -51,21 +51,27 @@ const VaccineData = () => {
   };
 
   useEffect(() => {
+    const source = axios.CancelToken.source();
+    let config = { cancelToken: source.token };
     axios
-      .get('https://disease.sh/v3/covid-19/vaccine/coverage?lastdays=all')
+      .get('https://disease.sh/v3/covid-19/vaccine/coverage?lastdays=all', config)
       .then((response) => setGlobalDataset(renderGlobalChart(response.data)))
       .catch((err) => console.error(err));
     axios
-      .get('https://disease.sh/v3/covid-19/vaccine/coverage/countries?lastdays=all')
+      .get('https://disease.sh/v3/covid-19/vaccine/coverage/countries?lastdays=all', config)
       .then((response) => setCountriesDataset(renderCountriesChart(response.data)))
-      .catch((err) => console.error(err));
+      .catch((err) => {});
+
+    return () => {
+      source.cancel();
+    };
   }, []);
 
   return (
     <StyledVaccineData>
-      <Headline size="2">Szczepienia</Headline>
       {countriesDataset && globalDataset ? (
         <>
+          <Headline size="2">Szczepienia</Headline>
           <ChartBox datasets={globalDataset.datasets} labels={globalDataset.labels}>
             Szczepienia na świecie
           </ChartBox>

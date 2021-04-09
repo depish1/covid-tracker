@@ -2,19 +2,20 @@ import styled from 'styled-components';
 
 const StyledNav = styled.nav`
   z-index: 2;
-  background-color: ${({ theme }) => theme.colors.backgroundComponent};
-  height: calc(100vh - 50px);
-  z-index: 2;
-  -webkit-box-shadow: 7px 0px 10px -3px #d3d3d3;
-  box-shadow: 7px 0px 10px -3px #d3d3d3;
-  transition: width 1s;
+  background-color: ${({ theme }) => theme.colors.navBg};
+  height: 100vh;
+  transition: left 1s;
+  position: fixed;
+  top: 0;
+  left: 0;
 
   &.hidden {
-    display: none;
+    left: -200px;
   }
 `;
 
 export const StyledUl = styled.ul`
-  margin-top: 2rem;
+  margin-top: 1rem;
 `;
+
 export default StyledNav;

@@ -1,18 +1,19 @@
 import React from 'react';
 import StyledNavLink from './StyledNavLink';
+import { Link } from 'react-router-dom';
 
-const NavLink = ({ toggleNavVisibility, children, selectedTab, selectTabFunction, idForLi }) => {
+const NavLink = ({ path, toggleNavVisibility, children, selectedTab, selectTabFunction, idForLi }) => {
   const classes = selectedTab === idForLi ? 'selected' : '';
   return (
     <StyledNavLink
-      id={idForLi}
-      className={classes}
       onClick={(e) => {
         selectTabFunction(e.target.id);
         toggleNavVisibility();
       }}
     >
-      {children}
+      <Link className={classes} id={idForLi} to={path}>
+        {children}
+      </Link>
     </StyledNavLink>
   );
 };

@@ -100,25 +100,32 @@ const Charts = () => {
   };
 
   useEffect(() => {
+    const source = axios.CancelToken.source();
+    let config = { cancelToken: source.token };
+
     axios
-      .get('https://disease.sh/v3/covid-19/historical/all?lastdays=all')
+      .get('https://disease.sh/v3/covid-19/historical/all?lastdays=all', config)
       .then((response) => setGlobalDataset(renderGlobalChart(response.data)))
       .catch((err) => console.error(err));
     axios
-      .get('https://disease.sh/v3/covid-19/historical?lastdays=all')
+      .get('https://disease.sh/v3/covid-19/historical?lastdays=all', config)
       .then((response) => setCountriesDataset(renderCountriesChart(response.data)))
-      .catch((err) => console.error(err));
+      .catch((err) => {});
+
+    return () => {
+      source.cancel();
+    };
   }, []);
   return (
     <StyledCharts>
-      <Headline size="2">Covid-19 Wykresy</Headline>
       {countriesDataset && globalDataset ? (
         <>
+          <Headline size="2">Wykresy</Headline>
           <ChartBox datasets={globalDataset.datasets} labels={globalDataset.labels}>
             Covid-19 na świecie
           </ChartBox>
           <ChartBox labels={countriesDataset[1]} data={countriesDataset[0]} countries={countriesDataset[2]}>
-            Szczepienia wg. kraju
+            Covid-19 wg. kraju
           </ChartBox>
         </>
       ) : (

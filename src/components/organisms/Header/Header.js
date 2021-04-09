@@ -1,13 +1,13 @@
 import React from 'react';
 import Headline from 'components/atoms/Headline/Headline';
-import StyledHeader, { StyledHeaderContainer } from './StyledHeader';
+import StyledHeader from './StyledHeader';
+import coronaImg from 'assets/corona32img.png';
 
 const Header = () => (
-  <StyledHeaderContainer>
-    <StyledHeader>
-      <Headline size="1">Covid-19 Tracker</Headline>
-    </StyledHeader>
-  </StyledHeaderContainer>
+  <StyledHeader>
+    <img src={coronaImg} alt="Virus" />
+    <Headline size="1">Covid-19 Tracker</Headline>
+  </StyledHeader>
 );
 
 export default Header;

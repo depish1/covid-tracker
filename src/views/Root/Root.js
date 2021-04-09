@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 import Header from 'components/organisms/Header/Header';
-
-import Main from 'components/organisms/Main/Main';
-import Container from './Container';
+import Nav from 'components/organisms/Nav/Nav';
 import GlobalStyle from 'assets/styles/GlobalStyle';
 import { theme } from 'assets/styles/theme';
 import navArr from 'assets/data/navArr';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Home from 'components/templates/Home/Home';
+import Charts from 'components/templates/Charts/Charts';
+import VaccineData from 'components/templates/VaccineData/VaccineData';
 
 const Root = () => {
   const [selectedTab, setSelectedTab] = useState('home');
@@ -19,21 +21,34 @@ const Root = () => {
   const handleLinkClick = (id) => {
     setSelectedTab(id);
   };
+
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <Container>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
         <Header />
 
-        <Main
+        <Nav
+          toggleNavVisibility={toggleNavVisibility}
           isNavOpen={isNavOpen}
           navArr={navArr}
           selectedTab={selectedTab}
           selectTabFunction={handleLinkClick}
-          toggleNavVisibility={toggleNavVisibility}
         />
-      </Container>
-    </ThemeProvider>
+
+        <Switch>
+          <Route path="/charts">
+            <Charts />
+          </Route>
+          <Route path="/vaccines">
+            <VaccineData />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </ThemeProvider>
+    </Router>
   );
 };
 

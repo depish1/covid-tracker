@@ -19,7 +19,6 @@ canvas {
 
 body {
     font-family: 'Roboto', sans-serif;
-    overflow: hidden;
 }
 
 a, button {
