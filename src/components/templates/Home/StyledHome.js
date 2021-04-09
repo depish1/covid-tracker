@@ -7,6 +7,12 @@ const StyledHome = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  & img {
+    @media only screen and (max-width: 800px) {
+      display: none;
+    }
+  }
 `;
 
 export const Wrapper = styled.div`
