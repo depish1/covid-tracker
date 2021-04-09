@@ -4,6 +4,7 @@ import BasicData from 'components/organisms/BasicData/BasicData';
 import Headline from 'components/atoms/Headline/Headline';
 import axios from 'axios';
 import Loader from 'components/molecules/Loader/Loader';
+import corona from 'assets/corona.png';
 
 const Home = () => {
   const [data, setData] = useState(null);
@@ -28,7 +29,7 @@ const Home = () => {
       return (
         <>
           <Headline size="2">Podstawowe dane</Headline>
-
+          <img src={corona} alt="Corona" />
           <Wrapper>
             <BasicData className="BasicData" sum={data.active} today={data.todayCases} oneMilion={data.casesPerOneMillion} type="cases"></BasicData>
             <BasicData
