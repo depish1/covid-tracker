@@ -37,13 +37,13 @@ const Root = () => {
         />
 
         <Switch>
-          <Route path="/charts">
+          <Route path="/covid-tracker/charts">
             <ChartsView />
           </Route>
-          <Route path="/vaccines">
+          <Route path="/covid-tracker/vaccines">
             <VaccineData />
           </Route>
-          <Route path="/">
+          <Route path="/covid-tracker/home">
             <Home />
           </Route>
         </Switch>
