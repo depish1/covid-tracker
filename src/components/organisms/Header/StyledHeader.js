@@ -14,9 +14,10 @@ const StyledHeader = styled.header`
   align-items: center;
   -webkit-box-shadow: 0px 12px 24px -4px rgba(0, 0, 0, 0.73);
   box-shadow: 0px 12px 24px -4px rgba(0, 0, 0, 0.73);
+  z-index: 2;
 
   & img {
-    margin-right: 1rem;
+    margin: 0 0.5rem;
   }
 `;
 

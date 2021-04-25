@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const StyledHome = styled.div`
-  min-height: calc(100vh - 50px);
+  min-height: calc(100vh - 70px);
   background-color: ${({ theme }) => theme.colors.backgroundComponent};
   display: flex;
   flex-direction: column;

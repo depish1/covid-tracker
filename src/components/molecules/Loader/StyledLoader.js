@@ -14,7 +14,10 @@ export const Wrapper = styled.div`
   position: relative;
   width: 64px;
   height: 64px;
-  margin-top: 35vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 export const RingSpinner = styled.div`

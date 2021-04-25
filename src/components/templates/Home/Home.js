@@ -16,7 +16,6 @@ const Home = () => {
     axios
       .get('https://disease.sh/v3/covid-19/all?yesterday=false&twoDaysAgo=false', config)
       .then((response) => setData(response.data))
-      // .then((response) => console.log(response.data))
       .catch((err) => {});
 
     return () => {

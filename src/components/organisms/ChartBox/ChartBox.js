@@ -1,35 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import LineChart from 'components/molecules/LineChart/LineChart';
+import LineChart from 'components/molecules/Charts/LineChart';
+import BarChart from 'components/molecules/Charts/BarChart';
 import SelectForm from 'components/molecules/SelectForm/SelectFrom';
 import Headline from 'components/atoms/Headline/Headline';
 import StyledChartBox from './StyledChartBox';
+import Loader from 'components/molecules/Loader/Loader';
 
-const ChartBox = ({ datasets = null, labels, data = null, countries = null, children }) => {
-  const [dataset, setDataset] = useState(datasets);
+const ChartBox = ({ labels, data, countries, callback, children, selectedCountry, isBarChart, isLoader }) => {
+  const [dataset, setDataset] = useState(data);
 
   useEffect(() => {
-    if (data) {
-      const dataset = data.filter((el) => el.country === 'Poland')[0].datasets.datasets;
-      setDataset(dataset);
-    }
+    setDataset(data);
   }, [data]);
 
-  const contentToRender = (data) => {
-    if (data) {
-      return (
-        <>
-          <SelectForm countries={countries} callback={setDataset} data={data} />
-          <LineChart datasets={dataset} labels={labels} />
-        </>
-      );
-    } else {
-      return <LineChart datasets={dataset} labels={labels} />;
-    }
-  };
   return (
     <StyledChartBox>
-      <Headline size="4">{children}</Headline>
-      {contentToRender(data)}
+      <Headline size="4" isAdditionalMargin={selectedCountry ? false : true}>
+        {children}
+      </Headline>
+      {countries ? (
+        <SelectForm countries={countries} callback={callback} data={data} selectedCountry={selectedCountry} isDisabled={dataset ? false : true} />
+      ) : null}
+      {!isLoader ? isBarChart ? <BarChart datasets={dataset} labels={labels} /> : <LineChart datasets={dataset} labels={labels} /> : <Loader />}
     </StyledChartBox>
   );
 };

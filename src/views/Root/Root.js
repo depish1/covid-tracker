@@ -7,7 +7,7 @@ import { theme } from 'assets/styles/theme';
 import navArr from 'assets/data/navArr';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from 'components/templates/Home/Home';
-import Charts from 'components/templates/Charts/Charts';
+import ChartsView from 'components/templates/ChartsView/ChartsView';
 import VaccineData from 'components/templates/VaccineData/VaccineData';
 
 const Root = () => {
@@ -38,7 +38,7 @@ const Root = () => {
 
         <Switch>
           <Route path="/charts">
-            <Charts />
+            <ChartsView />
           </Route>
           <Route path="/vaccines">
             <VaccineData />

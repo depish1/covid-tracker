@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import StyledSelectForm from './StyledSelectForm';
 
-const SelectForm = ({ countries, data, callback }) => {
-  const [value, setValue] = useState('Poland');
+const SelectForm = ({ countries, data, callback, selectedCountry, isDisabled }) => {
+  const [value, setValue] = useState(selectedCountry);
+
+  useEffect(() => {
+    setValue(selectedCountry);
+  }, [selectedCountry]);
 
   const handleChange = (e) => {
-    setValue(e.target.value);
-    const dataset = data.filter((el) => el.country === e.target.value)[0].datasets.datasets;
-    callback(dataset);
+    callback(e.target.value);
   };
   return (
-    <StyledSelectForm value={value} onChange={handleChange}>
-      {countries.map((country, i) => (
+    <StyledSelectForm value={value} onChange={handleChange} disabled={isDisabled}>
+      {countries?.map((country, i) => (
         <option key={i} value={country}>
           {country}
         </option>

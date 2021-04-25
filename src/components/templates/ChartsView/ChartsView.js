@@ -1,33 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import StyledVaccineData from './StyledVaccineData';
 import axios from 'axios';
-import ChartBox from 'components/organisms/ChartBox/ChartBox';
+import {
+  mapGlobalSumData_charts,
+  mapGlobalDailyData_charts,
+  mapCountrySumData_charts,
+  mapCountryDailyData_charts,
+  mapCountriesArray,
+} from 'assets/helpers';
+import StyledCharts from './StyledCharts';
 import Headline from 'components/atoms/Headline/Headline';
-import { mapCountryDailyData_vacc, mapGlobalDailyData_vacc, mapGlobalSumData_vacc, mapCountrySumData_vacc, mapCountriesArray } from 'assets/helpers';
+import ChartBox from 'components/organisms/ChartBox/ChartBox';
 
-const VaccineData = () => {
+const ChartsView = () => {
   const [globalSumData, setGlobalSumData] = useState(null);
+  const [globalDailyData, setGlobalDailyData] = useState(null);
   const defaultCountry = 'Poland';
   const [selectedCountrySum, setSelectedCountrySum] = useState(defaultCountry);
-  const [countrySumData, setCountrySumData] = useState(null);
-  const [countriesArray, setCountriesArray] = useState(null);
-  const [countryDailyData, setCountryDailyData] = useState(null);
-  const [globalDailyData, setGlobalDailyData] = useState(null);
   const [selectedCountryDaily, setSelectedCountryDaily] = useState(defaultCountry);
+  const [countrySumData, setCountrySumData] = useState(null);
+  const [countryDailyData, setCountryDailyData] = useState(null);
+  const [countriesArray, setCountriesArray] = useState(null);
 
   useEffect(() => {
     const source = axios.CancelToken.source();
     let config = { cancelToken: source.token };
+
     axios
-      .get('https://disease.sh/v3/covid-19/vaccine/coverage?lastdays=all', config)
+      .get('https://disease.sh/v3/covid-19/historical/all?lastdays=all', config)
       .then((response) => {
-        setGlobalSumData(mapGlobalSumData_vacc(response.data));
-        setGlobalDailyData(mapGlobalDailyData_vacc(response.data));
+        setGlobalSumData(mapGlobalSumData_charts(response.data));
+        setGlobalDailyData(mapGlobalDailyData_charts(response.data));
       })
       .catch((err) => console.error(err));
 
     axios
-      .get('https://disease.sh/v3/covid-19/vaccine/coverage/countries?lastdays=1', config)
+      .get('https://disease.sh/v3/covid-19/historical?lastdays=1', config)
       .then((response) => setCountriesArray(mapCountriesArray(response.data)))
       .catch((err) => console.error(err));
 
@@ -42,31 +49,32 @@ const VaccineData = () => {
     const source = axios.CancelToken.source();
     let config = { cancelToken: source.token };
     axios
-      .get(`https://disease.sh/v3/covid-19/vaccine/coverage/countries/${selectedCountrySum}?lastdays=all`, config)
-      .then((response) => setCountrySumData(mapCountrySumData_vacc(response.data)))
+      .get(`https://disease.sh/v3/covid-19/historical/${selectedCountrySum}?lastdays=all`, config)
+      .then((response) => setCountrySumData(mapCountrySumData_charts(response.data)))
       .catch((err) => {});
   }, [selectedCountrySum]);
 
   useEffect(() => {
     if (!selectedCountryDaily) return;
     setCountryDailyData(null);
+    console.log('xd');
     const source = axios.CancelToken.source();
     let config = { cancelToken: source.token };
     axios
-      .get(`https://disease.sh/v3/covid-19/vaccine/coverage/countries/${selectedCountryDaily}?lastdays=all`, config)
-      .then((response) => setCountryDailyData(mapCountryDailyData_vacc(response.data)))
+      .get(`https://disease.sh/v3/covid-19/historical/${selectedCountryDaily}?lastdays=all`, config)
+      .then((response) => setCountryDailyData(mapCountryDailyData_charts(response.data)))
       .catch((err) => {});
   }, [selectedCountryDaily]);
 
   return (
-    <StyledVaccineData>
+    <StyledCharts>
       <>
-        <Headline size="2">Szczepienia</Headline>
-        <ChartBox data={globalSumData?.datasets} labels={globalSumData?.labels} isLoader={globalSumData ? false : true}>
-          Szczepienia na świecie przyrostowo
+        <Headline size="2">Wykresy</Headline>
+        <ChartBox data={globalSumData?.datasets} labels={globalSumData?.labels} isBarChart={false} isLoader={globalSumData ? false : true}>
+          Covid-19 na świecie przyrostowo
         </ChartBox>
         <ChartBox data={globalDailyData?.datasets} labels={globalDailyData?.labels} isBarChart={true} isLoader={globalDailyData ? false : true}>
-          Szczepienia na świecie dziennie
+          Covid-19 na świecie dziennie
         </ChartBox>
         <ChartBox
           data={countrySumData?.data}
@@ -74,9 +82,10 @@ const VaccineData = () => {
           countries={countriesArray}
           callback={setSelectedCountrySum}
           selectedCountry={selectedCountrySum}
+          isBarChart={false}
           isLoader={countrySumData ? false : true}
         >
-          Szczepienia wg. kraju przyrostowo
+          Covid-19 wg. kraju przyrostowo
         </ChartBox>
         <ChartBox
           data={countryDailyData?.data}
@@ -87,11 +96,11 @@ const VaccineData = () => {
           isBarChart={true}
           isLoader={countryDailyData ? false : true}
         >
-          Szczepienia wg. kraju dziennie
+          Covid-19 wg. kraju dziennie
         </ChartBox>
       </>
-    </StyledVaccineData>
+    </StyledCharts>
   );
 };
 
-export default VaccineData;
+export default ChartsView;

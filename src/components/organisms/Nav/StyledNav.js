@@ -4,7 +4,7 @@ const StyledNav = styled.nav`
   z-index: 2;
   background-color: ${({ theme }) => theme.colors.navBg};
   height: 100vh;
-  transition: left 1s;
+  transition: left 1.5s;
   position: fixed;
   top: 0;
   left: 0;
