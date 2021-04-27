@@ -12,10 +12,33 @@ const BarChart = ({ datasets, labels }) => {
     <ChartContainer>
       <Bar
         data={chartData}
-        height={400}
+        height={700}
         width={800}
         options={{
           maintainAspectRatio: false,
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  fontSize: 10,
+                },
+              },
+            ],
+            xAxes: [
+              {
+                ticks: {
+                  fontSize: 10,
+                },
+              },
+            ],
+          },
+          legend: {
+            display: true,
+            position: 'top',
+            labels: {
+              boxWidth: 20,
+            },
+          },
         }}
       />
     </ChartContainer>

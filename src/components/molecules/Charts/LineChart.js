@@ -12,7 +12,7 @@ const LineChart = ({ datasets, labels }) => {
     <ChartContainer>
       <Line
         data={chartData}
-        height={400}
+        height={700}
         width={800}
         options={{
           maintainAspectRatio: false,
@@ -31,6 +31,13 @@ const LineChart = ({ datasets, labels }) => {
                 },
               },
             ],
+          },
+          legend: {
+            display: true,
+            position: 'top',
+            labels: {
+              boxWidth: 20,
+            },
           },
         }}
       />

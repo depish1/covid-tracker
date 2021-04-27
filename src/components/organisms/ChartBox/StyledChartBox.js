@@ -16,7 +16,7 @@ const StyledChartBox = styled.div`
   }
 
   @media only screen and (max-width: 600px) {
-    width: 88vw;
+    width: 95vw;
   }
 `;
 
